@@ -2,9 +2,11 @@
 
 [SSH Keygen](#ssh-keygen)
 
+[Manipulasi direktori dan file pada terminal](#manipulasi-direktori)
+
 # Content
 <details>
-<summary><h2>SSH Keygen</h2></summary>
+<summary><h2 id="ssh-keygen">SSH Keygen</h2></summary>
   <div>
 
 ### Key Generation with `ssh-keygen`
@@ -66,3 +68,102 @@ Here's a step-by-step example:
    
   </div>
 </details>
+
+<details>
+<summary><h2 id="manipulasi-direktori">Manipulasi direktori dan file pada terminal</h2></summary>
+  <div>
+
+### Membuat Direktori
+
+Untuk membuat direktori baru, gunakan perintah `mkdir` diikuti dengan nama direktori:
+```sh
+mkdir nama_direktori
+```
+
+### Menghapus Direktori
+
+Untuk menghapus direktori kosong, gunakan perintah `rmdir`:
+```sh
+rmdir nama_direktori
+```
+Untuk menghapus direktori beserta isinya, gunakan perintah `rm -r`:
+```sh
+rm -r nama_direktori
+```
+
+### Melihat Isi Direktori
+
+Untuk melihat isi dari sebuah direktori, gunakan perintah `ls`:
+```sh
+ls nama_direktori
+```
+Untuk melihat isi direktori beserta detail tambahan, gunakan perintah `ls -l`:
+```sh
+ls -l nama_direktori
+```
+Untuk melihat isi direktori termasuk file tersembunyi, gunakan perintah `ls -a`:
+```sh
+ls -a nama_direktori
+```
+
+### Membuat File
+
+Untuk membuat file baru, gunakan perintah `touch` diikuti dengan nama file:
+```sh
+touch nama_file
+```
+
+### Menghapus File
+
+Untuk menghapus file, gunakan perintah `rm` diikuti dengan nama file:
+```sh
+rm nama_file
+```
+
+### Menyalin File atau Direktori
+
+Untuk menyalin file, gunakan perintah `cp` diikuti dengan nama file sumber dan tujuan:
+```sh
+cp file_sumber file_tujuan
+```
+Untuk menyalin direktori beserta isinya, gunakan perintah `cp -r`:
+```sh
+cp -r direktori_sumber direktori_tujuan
+```
+
+### Memindahkan atau Mengganti Nama File atau Direktori
+
+Untuk memindahkan atau mengganti nama file atau direktori, gunakan perintah `mv` diikuti dengan nama file atau direktori sumber dan tujuan:
+```sh
+mv sumber tujuan
+```
+
+### Membuka File
+
+Untuk membuka file dengan editor teks, misalnya `nano` atau `vim` (kalau kroco, pakai nano aja):
+```sh
+nano nama_file
+```
+atau
+```sh
+vim nama_file
+```
+
+### Melihat Isi File
+
+Untuk melihat isi file tanpa membukanya di editor, gunakan perintah `cat`, `less`, atau `more`:
+```sh
+cat nama_file
+```
+atau
+```sh
+less nama_file
+```
+atau
+```sh
+more nama_file
+```
+
+  </div>
+</details>
+
