@@ -2,6 +2,8 @@
 
 [SSH Keygen](#ssh-keygen)
 
+[git (action, etc)](#git)
+
 [Manipulasi direktori dan file pada terminal](#manipulasi-direktori)
 
 [Docker Container Basics](#docker-container-basics)
@@ -69,6 +71,97 @@ Here's a step-by-step example:
    ```
    
   </div>
+</details>
+
+<details>
+   <summary>
+      <h2 id="git">Git Action</h2>
+   </summary>
+   <div>
+
+### Contoh config file github workflow
+```yml
+name: Test, Build, and Deploy
+
+on:
+   push:
+      branches:
+         - main
+
+jobs:
+   test-build:
+      runs-on: ubuntu-latest
+      strategy:
+         matrix:
+            node-version: [16.x]
+
+      steps:
+         - uses: actions/checkout@v2
+         - name: Testing Build pre-Deploy
+            uses: actions/setup-node@v2
+            with:
+               node-version: ${{ matrix.node-version }}
+               cache: "npm"
+         - run: npm i
+         - run: npm run build
+
+   deploy:
+      needs: test-build
+      runs-on: ubuntu-latest
+
+      strategy:
+         matrix:
+            node-version: [16.x]
+      steps:
+         - name: build app on vm
+            uses: appleboy/ssh-action@master
+            with:
+               host: ${{ secrets.HOST }}
+               username: ${{ secrets.USERNAME }}
+               password: ${{ secrets.PASSWORD }}
+               port: ${{ secrets.PORT }}
+               script: |
+                  eval "$(ssh-agent -s)"
+                  ssh-add ~/.ssh/<<namafileprivkey>>
+                  echo "cek folder project";
+                  [ ! -d "${HOME}/repo/task-fusion" ] &&
+                  {
+                     echo "Cloning";
+                     mkdir -p ~/repo;
+                     cd ~/repo;
+                     git clone https://github.com/zakiakmal/task-fusion.git;
+                  } ||
+                  {
+                     echo "building";
+                     cd ~/repo/task-fusion;
+                     git restore .;
+                     git pull origin main;
+                  }
+```
+### Penjelasan
+
+Kode di atas menunjukkan workflow dari github action yang memiliki sintaks yml. 
+
+`on`: use `on` to define which events can cause the workflow to run. Contohnya `on: [push, fork]`
+
+`jobs`: A workflow run is made up of one or more `jobs`, which run in parallel by default. To run jobs sequentially, you can define dependencies on other jobs using the `jobs.<job_id>.needs` keyword.
+
+`strategy: matrix:`: Use `jobs.<job_id>.strategy.matrix` to define a matrix of different job configurations. Within your matrix, define one or more variables followed by an array of values.
+
+Kemudian terdapat `${{ secrets.X }}` di dalam yml tersebut. maksud dari `${{ secrets.X }}` adalah dia mengambil variabel secrets yang bisa kita input pada settingan github, dan `X` merupakan nama variabel nya.
+
+### Doing git with ssh
+
+Untuk dapat melakukan perintah seperti clone, push, pull, etc,  menggunakan git ssh langkah yang perlu kita lakukan adalah
+1. generate ssh seperti pada bagian [SSH Keygen](#ssh-keygen)
+2. tambahkan public key yang telah digenerate ke dalam `SSH and GPG Keys` pada setting github sebagai SSH (New SSH)
+3. tambah private ssh key ke dalam ssh authentication agent, dengan menjalankan perintah
+      ```sh
+      eval $(ssh-agent -s)
+      ssh-add <<file_path_to_private_key>>
+      ```
+
+   </div>
 </details>
 
 <details>
