@@ -4,6 +4,8 @@
 
 [Manipulasi direktori dan file pada terminal](#manipulasi-direktori)
 
+[Docker Container Basics](#docker-container-basics)
+
 # Content
 <details>
 <summary><h2 id="ssh-keygen">SSH Keygen</h2></summary>
@@ -167,3 +169,22 @@ more nama_file
   </div>
 </details>
 
+<details>
+<summary><h2 id="ssh-keygen">Docker Container Basics</h2></summary>
+  <div>
+
+### Docker Build
+`docker build -t <image-name> .`
+### Docker Build
+`docker run -d -p <host-port>:<docker-port> --env-file <nama-file.env> <image-name>`
+### Docker List Running Containers
+`docker ps`
+### Docker List All Containers
+`docker ps -a`
+### Docker Stop Container
+`docker stop <container-id>`
+### Docker Remove Container 
+`docker rm <container-id>`
+
+  </div>
+</details>
